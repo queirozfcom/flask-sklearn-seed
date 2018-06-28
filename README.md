@@ -134,15 +134,15 @@ REQUEST
 POST /v0/predict
 {
 	"id": "2",
-	"x_1": 100.0,
+	"x_1": -2.0,
 	"x_2": -0.414120,
 	"x_3": 0.2131,
-	"x_4": -123.2
+	"x_4": -1.2
 }
 RESPONSE 200
 {
     "id": "2",
-    "prediction": 0.345
+    "prediction": 0.8077
 }
 ```
 
@@ -153,10 +153,10 @@ REQUEST
 POST /v43287/predict
 {
 	"id": "19826478126",
-	"score_3": 100.0,
-	"score_4": -0.414120,
-	"score_5": 0.2131,
-	"score_6": -123.2
+	"x_1": 100.0,
+	"x_2": -0.414120,
+	"x_3": 0.2131,
+	"x_4": -123.2
 }
 RESPONSE 404
 {
@@ -170,13 +170,13 @@ RESPONSE 404
 REQUEST
 POST /v0/predict
 {
-	"id": "19826478126",
-	"score_3": 100.0,
-	"score_6": -123.2
+	"id": "126",
+	"x_1": 1.0,
+	"x_2": -2.2
 }
 RESPONSE 400
 {
-    "message": "Missing keys: 'score_4', 'score_5'"
+    "message": "Missing keys: 'x_3', 'x_4'"
 }
 ```
 
