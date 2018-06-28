@@ -25,12 +25,24 @@ Additionaly:
 
 - start the server
 
-To start the server:
+## Using the app
 
-```
-$ python -m app.app
- * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
-```
+- Training via the CLI
+
+    - To train a model: `$ python -m app.models.train_model <path/to/training_set.csv> <version-number>`
+
+- Tests
+
+    - To run utils tests: `$ python -m app.tests.utils_tests`
+
+    - To run API tests: `$ python -m app.tests.web_tests`
+
+- Starting the server
+
+    ```
+    $ python -m app.app
+     * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+    ```
 
 ## Code Organization
 
@@ -179,49 +191,9 @@ RESPONSE 400
    I've used an external package (`concurrent-log-handler`) because the default `RotatingFileHandler` does not support
    compression of old log files. This is to make sure logging itself doesn't cause problems due to lack of disk space.
 
-- CachingTestCase
-
+- Caching
     There are a couple of caching mechanisms for flask (e.g. https://github.com/sh4nks/flask-caching) but, since
     Logistic Regression is an eager learning method (i.e. inference is quite fast because most of the work is done at training
     time), it didn't seem to be worth the extra complexity.
 
     Maybe if you are using lazy methods (such as k-NN), caching would be more useful.
-
-- Training via the CLI
-
-    Training code is a cli job rather than an API route (also possible, but I didn't
-    think it would be needed right now).
-
-    - To train a model: `$ python -m app.models.train_model <path/to/training_set.csv> <version-number>`
-
-- Tests
-
-    I understand the value of testing for maintaining a project's integrity and enable change (particularly in projects
-    written in weakly-typed languages such as Python).
-
-    However, I think that writing too many tests makes projects brittle especially at the beginning, when one is not
-    very sure what actual features are going to be needed and how the project will be used.
-
-    Therefore, I've actively refrained from exhaustively testing all modules because I believe that testing should be
-    added incrementally, as the project grows. I've added test code for main app features (e.g. the routes) and for
-    code in utils.
-
-    I believe in writing "just enough" test code at the beginning of a project, and adding tests as the it matures.
-
-    - To run utils tests: `$ python -m app.tests.utils_tests`
-
-    - To run API tests: `$ python -m app.tests.web_tests`
-
----------------------------
-
-### Future enhancements
-
-- Load testing
-
-- A more roubust web server (Apache/NGINX)
-
-- Continuous integration / continuous deployment
-
-- Full-blown CLI application (maybe using Click) for repeated tasks such as model training, etc.
-
-- Packaging the project as a Docker container for easier deployment.
