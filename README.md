@@ -192,8 +192,9 @@ RESPONSE 400
    compression of old log files. This is to make sure logging itself doesn't cause problems due to lack of disk space.
 
 - Caching
-    There are a couple of caching mechanisms for flask (e.g. https://github.com/sh4nks/flask-caching) but, since
-    Logistic Regression is an eager learning method (i.e. inference is quite fast because most of the work is done at training
-    time), it didn't seem to be worth the extra complexity.
 
-    Maybe if you are using lazy methods (such as k-NN), caching would be more useful.
+   There are a couple of caching mechanisms for flask (e.g. https://github.com/sh4nks/flask-caching) but, since
+   Logistic Regression is an eager learning method (i.e. inference is quite fast because most of the work is done at training
+   time), it didn't seem to be worth the extra complexity.
+
+   Maybe if you are using lazy methods (such as k-NN), caching would be more useful.
