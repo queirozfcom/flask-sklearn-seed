@@ -54,49 +54,49 @@ and [Cookie Cutter Data Science](https://drivendata.github.io/cookiecutter-data-
 ```
 .
 │
-├── README.md                                 <----- this file
+├── README.md                     <----- this file
 │
 ├── app
-│   ├── app.py                                <----- main project file. contains routes and initialization code
+│   ├── app.py                    <----- main project file. contains routes and initialization code
 │   │
 │   ├── settings.py
 │   │
-│   ├── helpers                               <----- helpers contain helper code that is SPECIFIC to this application
+│   ├── helpers                   <----- helpers contain helper code that is SPECIFIC to this application
 │   │   ├── features.py                              they are placed here so as not to overly pollute the business logic
 │   │   ├── files.py                                 with scaffolding code.
 │   │   └── validation.py
 │   │
-│   ├── models                                <----- code for training models
+│   ├── models                    <----- code for training models
 │   │   └── train_model.py
 │   │
-│   └── utils                                 <----- utils contain helper code that is NOT SPECIFIC to this application,
+│   └── utils                     <----- utils contain helper code that is NOT SPECIFIC to this application,
 │       └── files.py                                i.e. it could be extracted and used elsewhere
 │
-├── data                                      <----- data files, intermediate representation, if needed.
+├── data                          <----- data files, intermediate representation, if needed.
 │   ├── interim
 │   ├── processed
 │   └── raw
 │       └── training_set.csv
 │
-├── logs                                      <----- logs folder
+├── logs                          <----- logs folder
 │   ├── application.log
 │
-├── notebooks                                 <----- jupyter notebooks for data exploration and analyses
+├── notebooks                     <----- jupyter notebooks for data exploration and analyses
 │   └── view-data.ipynb
 │
-├── requirements-dev.txt                      <----- packages required to DEVELOP this project (train model, notebooks, tests, CLI commands)
-├── requirements-prod.txt                     <----- packages required to DEPLOY this project (only serves the API)
+├── requirements-dev.txt          <----- packages required to DEVELOP this project (train model, notebooks, tests, CLI commands)
+├── requirements-prod.txt         <----- packages required to DEPLOY this project (only serves the API)
 │
-├── tests                                     <----- test code
+├── tests                         <----- test code
 │   ├── utils_tests.py
 │   └── web_tests.py
 │
-├── trained-models                            <------ trained models (serialized) are kept here
+├── trained-models                <------ trained models (serialized) are kept here
 │   ├── trained-model-v0.p
 │   ├── trained-model-v1.p
 │   └── ...
 │
-└── venv3                                     <------ python virtualenv
+└── venv3                         <------ python virtualenv
 ```
 
 ## API Docs
