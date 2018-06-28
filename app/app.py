@@ -7,9 +7,9 @@ from concurrent_log_handler import ConcurrentRotatingFileHandler
 from flask import Flask, request, jsonify, make_response
 from schema import SchemaError
 
-import settings
-from helpers import features, validation
-from utils import files
+from . import settings
+from app.helpers import features, validation
+from app.utils import files
 
 app = Flask(__name__)
 clf = None
@@ -41,12 +41,12 @@ def predict(version):
 
             prediction = models[version].predict_proba(feature_vector)[:, 1]
 
-            rounded_prediction = round(prediction, 4)
+            rounded_prediction = round(prediction[0], 4)
 
             return make_response((jsonify({'id': payload["id"], 'prediction': rounded_prediction})))
 
         except SchemaError as ex:
-            return make_response(jsonify({"message": ex.message}), 400)
+            return make_response(jsonify({"message": ex.errors}), 400)
 
     else:
         return make_response(jsonify({"message": "Trained model version '{}' was not found.".format(version)}), 404)
@@ -126,7 +126,9 @@ else:
     # load the models only once, when the app boots
     for path_to_model in models_available:
         version_id = re.match(pattern, path_to_model).group(1)
-        models[version_id] = pickle.load(open(path_to_model, "rb"))
+        with open(path_to_model,"rb") as f:
+
+            models[version_id] = pickle.load(f)
 
     # disable logging so it doesn't interfere with testing
     app.logger.disabled = True

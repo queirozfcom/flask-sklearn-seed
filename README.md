@@ -133,15 +133,15 @@ Returns a prediction, calculated by a previously trained model, whose version is
 REQUEST
 POST /v0/predict
 {
-	"id": "19826478126",
-	"score_3": 100.0,
-	"score_4": -0.414120,
-	"score_5": 0.2131,
-	"score_6": -123.2
+	"id": "2",
+	"x_1": 100.0,
+	"x_2": -0.414120,
+	"x_3": 0.2131,
+	"x_4": -123.2
 }
 RESPONSE 200
 {
-    "id": "19826478126",
+    "id": "2",
     "prediction": 0.345
 }
 ```

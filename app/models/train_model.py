@@ -15,25 +15,25 @@ from ..utils import files as files_utils
 
 
 def train(path_to_dataset, version_id):
-    data = pd.read_parquet(path_to_dataset)
+    data = pd.read_csv(path_to_dataset)
 
     # split into training and validation
     training_set, validation_set = _split_dataset(data, 0.25, 1)
-    print 'training set has %s rows' % len(training_set)
-    print 'validation set has %s rows' % len(validation_set)
+    print('training set has %s rows' % len(training_set))
+    print('validation set has %s rows' % len(validation_set))
 
     # train model
-    training_set["score_3"] = training_set["score_3"].fillna(425)
-    training_set["default"] = training_set["default"].fillna(False)
+    training_set["x_1"] = training_set["x_1"].fillna(425)
+    training_set["target"] = training_set["target"].fillna(0)
     clf = LogisticRegression(C=0.1)
-    clf.fit(training_set[["score_3", "score_4", "score_5", "score_6"]], training_set["default"])
+    clf.fit(training_set[["x_1", "x_2", "x_3", "x_4"]], training_set["target"])
 
     # evaluate model
-    validation_set["score_3"] = validation_set["score_3"].fillna(455)
-    validation_set["default"] = validation_set["default"].fillna(False)
-    validation_predictions = clf.predict_proba(validation_set[["score_3", "score_4", "score_5", "score_6"]])[:, 1]
+    validation_set["x_1"] = validation_set["x_1"].fillna(423)
+    validation_set["target"] = validation_set["target"].fillna(0)
+    validation_predictions = clf.predict_proba(validation_set[["x_1", "x_2", "x_3", "x_4"]])[:, 1]
 
-    print(roc_auc_score(validation_set[["default"]], validation_predictions))
+    print(roc_auc_score(validation_set[["target"]], validation_predictions))
 
     filename = files_helper.make_filename(version_id)
 
@@ -51,7 +51,9 @@ def _split_dataset(df, validation_percentage, seed):
 
 
 def _persist_to_disk(classifier, path_to_file):
-    pickle.dump(classifier, open(path_to_file, "wb"))
+
+    with open(path_to_file, "wb") as f:
+        pickle.dump(classifier, f)
 
     if os.path.isfile(path_to_file):
         print("Successfully saved model at {}".format(path_to_file))

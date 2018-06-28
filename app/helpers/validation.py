@@ -15,10 +15,10 @@ def _predict_schema():
     schema = Schema(
         {
             'id': And(Use(str)),
-            'score_3': And(Use(float)),
-            'score_4': And(Use(float)),
-            'score_5': And(Use(float)),
-            'score_6': And(Use(float))
+            'x_1': And(Use(float)),
+            'x_2': And(Use(float)),
+            'x_3': And(Use(float)),
+            'x_4': And(Use(float))
         })
 
     return schema

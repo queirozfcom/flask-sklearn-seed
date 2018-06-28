@@ -7,7 +7,7 @@ from app.models.train_model import train
 import os
 import random
 
-path_to_train_dataset = os.path.abspath(__file__ + "/../../data/raw/training_set.parquet")
+path_to_train_dataset = os.path.abspath(__file__ + "/../../data/raw/training.csv")
 
 version_number = random.randint(888, 999)
 version_id = "v" + str(version_number)
@@ -46,25 +46,25 @@ class WebTests(TestCase):
 
         response = self.client.get(route)
 
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(response.data, "OK")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(str(response.data,'utf-8'), "OK")
 
     def test_negative_healthcheck(self):
         route = "/v{}/healthcheck".format(version_number + 1)
 
         response = self.client.get(route)
 
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(response.data, "Not OK")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(str(response.data,'utf-8'), "Not OK")
 
     def test_prediction(self):
 
         payload = {
-            "id": "19826478126",
-            "score_3": 100.0,
-            "score_4": -0.414120,
-            "score_5": 0.2131,
-            "score_6": -123.2
+            "id": "2",
+            "x_1": 1.2,
+            "x_2": -0.414120,
+            "x_3": 0.2131,
+            "x_4": -1.2
         }
 
         route = "/v{}/predict".format(version_number)
@@ -72,21 +72,21 @@ class WebTests(TestCase):
         response = self.client.post(route, data=json.dumps(payload),
                                     headers={'Content-Type': 'application/json'})
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
-        expected_response = json.dumps({"id": "19826478126", "prediction": 0.345}, indent=2).strip()
+        expected_response = json.dumps({"id": "2", "prediction": 0.6108}).replace(" ","")
 
-        actual_response = response.data.strip()
+        actual_response = str(response.data,'utf-8').strip()
 
-        self.assertEquals(actual_response, expected_response)
+        self.assertEqual(actual_response, expected_response)
 
     def test_400(self):
-        # missing score_3
+        # missing x_3
         payload = {
             "id": "fdasf",
-            "score_4": -0.414120,
-            "score_5": 0.2131,
-            "score_6": -123.2
+            "x_1": -0.414120,
+            "x_2": 0.2131,
+            "x_4": -123.2
         }
 
         route = "/v{}/predict".format(version_number)
@@ -94,15 +94,15 @@ class WebTests(TestCase):
         response = self.client.post(route, data=json.dumps(payload),
                                     headers={'Content-Type': 'application/json'})
 
-        self.assertEquals(response.status_code, 400)
+        self.assertEqual(response.status_code, 400)
 
     def test_404(self):
         payload = {
             "id": "foo-bar",
-            "score_3": 0.32,
-            "score_4": 0.5,
-            "score_5": 200,
-            "score_6": 200.87
+            "x_1": 0.32,
+            "x_2": 0.5,
+            "x_3": 200,
+            "x_4": 200.87
         }
 
         route = "/v{}/predict".format(version_number + 1)
@@ -110,7 +110,7 @@ class WebTests(TestCase):
         response = self.client.post(route, data=json.dumps(payload),
                                     headers={'Content-Type': 'application/json'})
 
-        self.assertEquals(response.status_code, 404)
+        self.assertEqual(response.status_code, 404)
 
 
 if __name__ == '__main__':
