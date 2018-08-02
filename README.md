@@ -1,5 +1,6 @@
 flask-sklearn-seed
 ==============================
+> View full post here: http://queirozf.com/entries/example-project-template-serve-a-scikit-learn-model-via-a-flask-api
 
 This is a **full** template for building a simple flask-based API and server that serves a trained Scikit-learn model.
 
